@@ -25,24 +25,30 @@ function plusSlides(direction){
   slides[index].style.display="block";
 }
 
-
-
+// Movie javascript 
 var movieTitle;
 var currentGenre = "Genre";
+var index = 0 ; 
 
-
-function showNoResultsText(totalcount) {
-
-  if (totalcount == 0) {
-    document.getElementById("no-results").style.display = "block";
-    console.log('totalcount in showNoResultsText' + totalcount);
-  } else {
-    document.getElementById("no-results").style.display = "none";
+function plusSlidesM(dir) {
+  var slide = document.getElementsByClassName("slides");
+  if (dir > 0){
+    index = (index + dir)  ; 
+    index = index % slide.length ; 
   }
-
+  else{
+    index += dir ; 
+    if(index < 0)
+      index = slide.length-1 ; 
+  }
+  for(let i = 0 ; i < slide.length ; i++)
+    slide[i].style.display = "none" ; 
+  slide[index].style.display = 'block' ; 
 }
 
 
+
+//Js Search bar 
 function updateResults() {
   var query = document.getElementsByClassName('search-query')[0].value.trim().toLowerCase();
   var counter = 0;
@@ -66,33 +72,25 @@ function updateResults() {
 
     if (compareMovieTitles.indexOf(query) === -1) {
       movieTitle[name].closest('div.media-carousel-movies').style.display = "none";
-    } else {
+    }
+    else {
       movieTitle[name].closest('div.media-carousel-movies').style.display = "block";
-      counter++;
     }
   }
 
-  showNoResultsText(counter);
 }
 
 
-
-function slideshow() {
-  var x = document.getElementById("check");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  }
-  else {
-    x.style.display = "none";
-  }
-}
-
-
+// JS for Dropdown
 function getMediaPosters(selectedGenre) {
   var countMovies = 0;
   var mediaCarouselMovies;
   currentGenre = selectedGenre;
   document.getElementById("genreText").innerHTML = selectedGenre;
+  if(selectedGenre == "All")
+  document.getElementById("genreText").innerHTML = "Genre";
+  slideshow() ; 
+
 
   if (selectedGenre == 'All') {
     document.getElementsByClassName('movies-action')[0].style.display = "block";
@@ -121,13 +119,23 @@ function getMediaPosters(selectedGenre) {
   }
 
 
-  var mediaCarouselMoviesCount = mediaCarouselMovies.length;
+  // var mediaCarouselMoviesCount = mediaCarouselMovies.length;
 
-  for (var count = 0; count < mediaCarouselMoviesCount; count++) {
-    if (mediaCarouselMovies[count].style.display == "block")
-      countMovies++;
+  // for (var count = 0; count < mediaCarouselMoviesCount; count++) {
+  //   if (mediaCarouselMovies[count].style.display == "block")
+  //     countMovies++;
+  // }
+  // console.log(countMovies);
+
+  // showNoResultsText(countMovies);
+}
+
+function slideshow() {
+  var x = document.getElementById("check");
+  if (x.style.display === "none") {
+  x.style.display = "block";
   }
-  console.log(countMovies);
-
-  showNoResultsText(countMovies);
+  else {
+  x.style.display = "none";
+  }
 }
